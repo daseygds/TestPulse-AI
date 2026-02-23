@@ -17,6 +17,7 @@ import org.testngmetadatalibs.annotations.TestCaseID;
 import org.testngmetadatalibs.client.PortalClient;
 import org.testngmetadatalibs.enums.TestSeverity;
 import org.testngmetadatalibs.enums.TestStatus;
+import org.testngmetadatalibs.model.SessionModel;
 import org.testngmetadatalibs.model.TestResultPayload;
 
 public class PortalListener implements ITestListener, ISuiteListener {
@@ -28,6 +29,8 @@ public class PortalListener implements ITestListener, ISuiteListener {
   public void onStart(ISuite suite){
     try {
       suiteCode = getHashCode(suite.getName());
+      String suiteName = suite.getName();
+      client.send(new SessionModel(suiteCode,suiteName));
     } catch (NoSuchAlgorithmException e) {
       throw new RuntimeException(e);
     }
